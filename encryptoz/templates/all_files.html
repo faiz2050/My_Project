@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section" >
+      
+        <h4>All Files</h4>
+			<div class="table-responsive" style="color: white;">
+				<table id="mytable" class="table table-bordred table-striped">
+					<thead>
+						<th>File Name</th>
+						<th>Date Created</th>
+						<th>User</th>
+						<th>Status</th>
+						<th>View</th>
+						<th>Delete</th>
+					</thead>
+					<tbody>
+						{% for file in files.items %}
+						<tr>
+							<td>{{ file.file_name }}</td>
+							<td>{{ file.date_created }}</td>
+							<td>{{ file.author.username }}</td>
+							{% if file.author == current_user %}
+								{% if file.encrypt == 0 %}
+									<td><a class="mr-2" href="{{ url_for('files.enc_files', file_id=file.id) }}" ><i class="fas fa-lock-open" style="color:red"></i></a>
+								
+									</td>
+								{% else %}
+									<td><a class="mr-2" href="{{ url_for('files.dec_files', file_id=file.id) }}" ><i class="fas fa-lock" style="color:green"></i></a></td>
+								
+								{% endif %}
+							{% endif %}
+							
+							<td><a class="mr-2" href="{{ url_for('files.view_file', file_id=file.id) }}" ><i class="fas fa-eye"></i></a></td>
+							<td><a class="mr-2" href="{{ url_for('files.del_file', file_id=file.id) }}" ><i class="fas fa-trash"></i></a></td>
+						</tr>
+						{% endfor %}
+					</tbody>
+		
+				</table>
+			</div>
+		{% for page_num in files.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+		  {% if page_num %}
+			{% if files.page == page_num %}
+			  <a class="btn btn-info mb-4" href="{{ url_for('files.all_files', page=page_num) }}">{{ page_num }}</a>
+			{% else %}
+			  <a class="btn btn-outline-info mb-4" href="{{ url_for('files.all_files', page=page_num) }}">{{ page_num }}</a>
+			{% endif %}
+		  {% else %}
+			...
+		  {% endif %}
+		{% endfor %}
+    </div>
+	
+{% endblock content %}
+

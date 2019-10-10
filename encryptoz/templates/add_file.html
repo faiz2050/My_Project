@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+      
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group" style="color: white;">
+                <h4><legend class="border-bottom mb-4">Add File</legend></h4>
+                <div class="form-group">
+                    {{ form.file.label() }}
+                    {{ form.file(class="form-control-file") }}
+                    {% if form.file.errors %}
+                        {% for error in form.nfile.errors %}
+                            <span class="text-danger">{{ error }}</span></br>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+				<div class="form-group">
+                    {{ form.file_name.label() }}
+                    {{ form.file_name(class="form-control-file") }}
+                    {% if form.file_name.errors %}
+                        {% for error in form.file_name.errors %}
+                            <span class="text-danger">{{ error }}</span></br>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+				<div class="form-group">
+                    {{ form.enc_key.label() }}
+                    {{ form.enc_key(class="form-control-file") }}
+                    {% if form.enc_key.errors %}
+                        {% for error in form.enc_key.errors %}
+                            <span class="text-danger">{{ error }}</span></br>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+				<div class="form-group list-group">
+                    {{ form.e_choice.label() }}
+                    {{ form.e_choice(class="form-control-file") }}
+                    {% if form.e_choice.errors %}
+                        {% for error in form.enc_key.errors %}
+                            <span class="text-danger">{{ error }}</span></br>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+{% endblock content %}
